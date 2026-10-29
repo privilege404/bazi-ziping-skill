@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex.skills/bazi-shaoweihua/rule-card.schema.json",
+  "title": "BaZi Rule Card",
+  "type": "object",
+  "required": ["id", "source", "topic", "conditions", "claim", "applies_to", "priority", "caveat"],
+  "properties": {
+    "id": {"type": "string"},
+    "source": {"type": "string"},
+    "source_ref": {"type": "string"},
+    "topic": {"type": "string"},
+    "conditions": {"type": "object"},
+    "claim": {"type": "string"},
+    "applies_to": {"type": "array", "items": {"type": "string"}},
+    "priority": {"type": "integer", "minimum": 0, "maximum": 100},
+    "caveat": {"type": "string"}
+  }
+}

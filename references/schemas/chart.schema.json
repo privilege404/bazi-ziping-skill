@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex.skills/bazi-shaoweihua/chart.schema.json",
+  "title": "BaZi Chart",
+  "type": "object",
+  "required": [
+    "input",
+    "calculation_datetime",
+    "lunar_date",
+    "day_boundary",
+    "pillars",
+    "day_master",
+    "five_elements",
+    "element_counts",
+    "ten_gods",
+    "hidden_stems",
+    "luck",
+    "annual",
+    "calculation_trace"
+  ],
+  "properties": {
+    "day_boundary": {
+      "enum": ["23:00", "midnight"]
+    },
+    "pillars": {
+      "type": "object",
+      "required": ["year", "month", "day", "hour"],
+      "properties": {
+        "year": {"$ref": "#/$defs/pillar"},
+        "month": {"$ref": "#/$defs/pillar"},
+        "day": {"$ref": "#/$defs/pillar"},
+        "hour": {"$ref": "#/$defs/pillar"}
+      }
+    },
+    "day_master": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1
+    },
+    "luck": {
+      "type": "object",
+      "required": ["direction", "start", "cycles", "current_cycle"],
+      "properties": {
+        "direction": {"enum": ["forward", "backward"]},
+        "start": {
+          "type": "object",
+          "required": ["years", "months", "days", "solar_date"]
+        },
+        "cycles": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/luck_cycle"}
+        },
+        "current_cycle": {
+          "anyOf": [
+            {"$ref": "#/$defs/luck_cycle"},
+            {"type": "null"}
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "pillar": {
+      "type": "object",
+      "required": ["stem", "branch", "ganzhi"],
+      "properties": {
+        "stem": {"type": "string"},
+        "branch": {"type": "string"},
+        "ganzhi": {"type": "string"}
+      }
+    },
+    "luck_cycle": {
+      "type": "object",
+      "required": ["index", "ganzhi", "start_year", "end_year", "start_age", "end_age"]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+[project]
+name = "bazi-ziping-skill"
+version = "2.0.0"
+description = "Evidence-grounded BaZi / Zi Ping skill with a deterministic Four Pillars engine."
+requires-python = ">=3.10"
+dependencies = ["lunar_python>=1.4.8"]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0", "tyme4py>=1.5.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
