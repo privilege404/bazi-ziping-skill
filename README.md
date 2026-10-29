@@ -1,10 +1,10 @@
 # BaZi Ziping Skill | 子平八字
 
-**排盘可核对，解读有温度。** 这是一个可供 AI 助手调用的本地子平八字 skill：先用 Python 计算四柱和命盘线索，再用自然语言回答你真正关心的问题。不把命理象意说成已经发生的事实，也不把它包装成确定性预测。
+**排盘可核对，解读有温度。** 为你的 AI 助手装上子平八字：从四柱、十神到大运流年，结合你关心的事业、感情与生活问题，给出有依据、听得懂的解读。
 
 ## 快速开始
 
-先安装 [Git](https://git-scm.com/) 和 [uv](https://docs.astral.sh/uv/getting-started/installation/)，并确保你的助手有**本地文件读取和命令执行能力**。选你的宿主，在终端运行一行命令：
+先安装 [Git](https://git-scm.com/) 和 [uv](https://docs.astral.sh/uv/getting-started/installation/)。选择你使用的智能体，在终端运行对应的一行命令：
 
 | 宿主 | 一行安装（PowerShell、macOS/Linux 终端均可） |
 | --- | --- |
@@ -15,28 +15,30 @@
 
 首次运行需要下载 Python 依赖。安装后新开对话，试着说：
 
-> 请用子平八字帮我看看最近的工作状态。我是 1991 年 3 月 15 日 18:00 出生，女，出生地在东八区。先排盘，再根据证据讲，不要给确定性预言。
+> 我是 1991 年 3 月 15 日 18:00 出生，女，出生地上海。请用子平八字帮我看看最近的工作状态，有哪些值得把握的机会？
 
-也可以不通过 AI，直接在仓库目录核对计算入口：
+喜欢命令行？在仓库目录直接排盘：
 
 ```bash
 uv run python -m bazi_ziping --datetime 1991-03-15T18:00:00 --gender female --topic career
 ```
 
-它会给出简短排盘线索。加 `--format json` 可得到结构化结果，供其他 agent 的工具层调用。自然语言解读由助手依据 [SKILL.md](SKILL.md) 生成，CLI 本身不冒充真人咨询。
+命令行输出简短排盘结果；在助手中使用时，会结合你的问题展开解读。加 `--format json` 可获取结构化结果，方便接入自己的工具。
 
-## 能做与不能做
+## 你可以问什么
 
-- 计算四柱、十神、大运和指定流年，保留时区、换日和真太阳时选项。
-- 为事业、关系、学习、健康、家庭等问题提供少量可回溯的命理线索；回答时区分计算事实、解释和未知。
-- 不从八字确认真实学历、疾病、收入、婚姻状态或未来事件；不替代医疗、法律、投资等专业判断。
-- 出生时辰不明确时，不用虚构的中午或其他时间补时柱。生辰默认在本地计算；交给云端助手时仍需遵守该平台的隐私规则。
+- **认识自己**：我的性格、长处和做事节奏有什么特点？
+- **事业与学习**：什么样的工作方式更适合我？如何发挥学习优势？
+- **感情与家庭**：怎样理解自己的相处模式与关系需求？
+- **大运与流年**：最近处于怎样的阶段，有哪些值得留意的变化？
+
+底层引擎计算四柱、十神和岁运，助手结合命盘依据与你交流。需要深入核对时，可以查看结构化结果与规则出处。
 
 ## 接入其他助手
 
-本项目遵循 [Agent Skills](https://agentskills.io/specification) 的 `SKILL.md` 形式，但**支持某个模型**与**宿主能执行本地排盘**是两回事。Claude、DeepSeek 或其他模型只有在其 agent/harness 提供本地命令工具时，才能调用同一 Python 入口。普通聊天窗口不能靠粘贴提示词执行本地程序。
+采用通用 [Agent Skills](https://agentskills.io/specification) 格式，一份 skill 共用同一套排盘引擎。Codex、Claude Code、OpenClaw、Hermes 的安装命令见上表。
 
-OpenClaw、Hermes、Claude Code 的安装路径及未验证事项见 [多端接入说明](docs/hosts.md)。WorkBuddy、DeepSeek harness 和其他个人助手也可以把 JSON CLI 注册为工具；尚无统一的一键安装方式，不在此宣称已端到端适配。
+WorkBuddy、DeepSeek harness 等支持本地工具的个人助手，也可以通过 JSON 接口接入。具体方法见 [多端接入说明](docs/hosts.md)。
 
 ## 输入与排错
 
@@ -50,4 +52,4 @@ uv run python -m bazi_ziping --datetime 1991-03-15T18:00:00 --gender female --ta
 
 ## 开源与隐私
 
-MIT License。项目源自 [bazi-shaoweihua](https://github.com/privilege404/bazi-shaoweihua) 的确定性计算引擎，V2 重新组织了入口和回答方式。评测实验和私有案例不随 skill 分发；请勿把真实姓名、生辰和私人经历提交到公开 issue。
+MIT License。项目源自 [bazi-shaoweihua](https://github.com/privilege404/bazi-shaoweihua) 的计算引擎，V2 重新组织了入口和回答方式。排盘在本地运行；使用云端助手时，数据处理遵循对应平台的隐私设置。命理内容供文化探索与自我反思。
